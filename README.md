@@ -16,7 +16,7 @@ A Go tool for analyzing Nomad debug bundles to detect potential scheduler issues
 ### From Source
 
 ```bash
-git clone https://github.com/louie/nomad-scheduler-analyzer.git
+git clone https://github.com/louievandyke/nomad-scheduler-analyzer.git
 cd nomad-scheduler-analyzer
 go build -o nomad-scheduler-analyzer ./cmd/main.go
 ```
@@ -24,7 +24,7 @@ go build -o nomad-scheduler-analyzer ./cmd/main.go
 ### Using Go Install
 
 ```bash
-go install github.com/louie/nomad-scheduler-analyzer/cmd@latest
+go install github.com/louievandyke/nomad-scheduler-analyzer/cmd@latest
 ```
 
 ## Usage
