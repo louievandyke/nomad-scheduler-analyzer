@@ -11,6 +11,18 @@ A Go tool for analyzing Nomad debug bundles to detect potential scheduler issues
 - 📊 **Detailed Reports**: Generates text or HTML reports with actionable recommendations
 - 📈 **Trend Analysis**: Compares multiple profile snapshots over time
 
+## When to Use This
+
+**Control plane performance degradation** — Job submissions are returning 500 errors, Raft commit latency is spiking (20s+), and logs show "timed out enqueuing operation" errors. The analyzer helps determine whether goroutine blocking or lock contention in the scheduler is the root cause by surfacing blocking hotspots and contention trends across profile snapshots.
+
+**Inconsistent client state / ghost nodes** — Nodes appear as "initializing" or "ready" in the cluster after the underlying instances have been terminated, or you see duplicate client registrations. Analyzing the debug bundle's goroutine profiles reveals whether heartbeat processing or node deregistration is blocked, preventing state convergence.
+
+**Autoscaler failures due to stale state** — The autoscaler is unable to scale down because terminated nodes remain registered in the cluster state. The tool can surface Raft or scheduler contention that prevents timely state cleanup, explaining why the autoscaler's view of the cluster is stale.
+
+**Lock contention under high-throughput batch workloads** — Thousands of concurrent job submissions per minute combined with heavy API read traffic are causing Raft to stall. The analyzer detects goroutine pile-ups at lock acquisition points (e.g., a blocked evaluations queue backed up behind `semacquire`) and quantifies the contention.
+
+**Raft subsystem investigation** — You're seeing "large raft entry" warnings, high replication lag, or FSM blocking. The goroutine profiles in the debug bundle reveal where threads are blocked and whether the Raft write path is contended, helping you distinguish between network-level replication issues and server-side processing bottlenecks.
+
 ## Installation
 
 ### From Source
