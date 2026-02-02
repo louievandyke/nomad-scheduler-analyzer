@@ -1,5 +1,6 @@
 # Binaries
 nomad-scheduler-analyzer
+main
 *.exe
 *.dll
 *.so
