@@ -41,7 +41,6 @@ var (
 	headerRegex     = regexp.MustCompile(`^goroutine profile: total (\d+)$`)
 	goroutineRegex  = regexp.MustCompile(`^(\d+) @ (0x[0-9a-f]+(?:\s+0x[0-9a-f]+)*)$`)
 	stackFrameRegex = regexp.MustCompile(`^#\s+(0x[0-9a-f]+)\s+(.+?)\+0x[0-9a-f]+\s+(.+)$`)
-	stateRegex      = regexp.MustCompile(`^\[([^\]]+)\]`)
 )
 
 // ParseGoroutineDebug1 parses a goroutine-debug1 text file
@@ -50,7 +49,7 @@ func ParseGoroutineDebug1(filePath string) (*GoroutineProfile, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to open file: %w", err)
 	}
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 
 	profile := &GoroutineProfile{
 		FilePath:   filePath,

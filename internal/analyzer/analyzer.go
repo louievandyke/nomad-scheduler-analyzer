@@ -117,9 +117,7 @@ func (a *Analyzer) detectGoroutineLeaks(analysis *Analysis) {
 
 		// Identify primary sources of growth
 		sources := a.identifyGrowthSources(first, last)
-		for _, source := range sources {
-			issue.Evidence = append(issue.Evidence, source)
-		}
+		issue.Evidence = append(issue.Evidence, sources...)
 
 		analysis.Issues = append(analysis.Issues, issue)
 	}

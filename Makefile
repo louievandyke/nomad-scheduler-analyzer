@@ -1,4 +1,4 @@
-.PHONY: build clean fmt vet test tidy
+.PHONY: build clean fmt vet lint test tidy
 
 build:
 	go build -o nomad-scheduler-analyzer ./cmd/main.go
@@ -11,6 +11,9 @@ fmt:
 
 vet:
 	go vet ./...
+
+lint:
+	golangci-lint run ./...
 
 test:
 	go test ./...
